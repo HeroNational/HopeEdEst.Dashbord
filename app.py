@@ -2,14 +2,18 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import json
+import os
+import base64
+from datetime import datetime
 
 # Configuration de la page
 st.set_page_config(
     page_title="Rapport RUC - Région de l'Est",
     page_icon="📊",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # Fonction pour injecter le CSS de manière cachée
@@ -24,11 +28,14 @@ def local_css():
     /* En-tête principal */
     .main-header {
         background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        padding: 2rem;
+        padding: 1.2rem 1.4rem;
         border-radius: 10px;
         color: white;
         margin-bottom: 2rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
     }
 
     .main-header h1 {
@@ -41,6 +48,16 @@ def local_css():
     .main-header h3 {
         color: #e0e7ff;
         font-weight: 400;
+    }
+
+    .main-header img {
+        width: 88px;
+        height: 88px;
+        object-fit: contain;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.08);
+        padding: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
     /* Cartes de statistiques */
@@ -140,6 +157,29 @@ def local_css():
         margin-top: 3rem;
     }
 
+    /* Style de l'équipe */
+    .team-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .team-member {
+        display: inline-block;
+        background: white;
+        padding: 6px 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        color: #334155;
+        font-size: 13px;
+        border-left: 3px solid #3b82f6;
+        transition: transform 0.2s;
+    }
+
+    .team-member:hover {
+        transform: translateY(-2px);
+    }
+
     /* Sidebar */
     section[data-testid="stSidebar"] {
         background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
@@ -215,11 +255,167 @@ def local_css():
         line-height: 1.6;
         color: #475569;
     }
+
+    /* Cartes statistiques stylisées */
+    .info-box {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        border-left: 4px solid #3b82f6;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .info-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .info-box-title {
+        font-size: 0.9rem;
+        color: #64748b;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-box-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-box-subtitle {
+        font-size: 0.85rem;
+        color: #94a3b8;
+    }
+
+    /* Team cards */
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .team-card {
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(2,6,23,0.06);
+        border-left: 4px solid #3b82f6;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .team-avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#3b82f6 0%, #60a5fa 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.25rem;
+        flex: 0 0 56px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+
+    .team-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .team-name {
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0;
+    }
+
+    .team-role {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.9rem;
+    }
+
+    /* Badge de statut */
+    .status-badge {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-top: 0.5rem;
+    }
+
+    .status-critical {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .status-warning {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .status-success {
+        background: #d1fae5;
+        color: #065f46;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # Appliquer le CSS
 local_css()
+
+# Responsive sidebar behavior: keep collapsed by default (mobile), expand on large screens
+import streamlit.components.v1 as components
+
+components.html("""
+<style>
+/* Force la sidebar visible sur grands écrans */
+@media (min-width: 992px) {{
+    section[data-testid="stSidebar"] {{
+        transform: none !important;
+        left: 0 !important;
+        position: relative !important;
+        visibility: visible !important;
+    }}
+    /* Décaler le contenu principal pour faire de la place */
+    div[data-testid="stAppViewContainer"] > .main {{
+        margin-left: 320px !important;
+    }}
+}}
+</style>
+<script>
+// Essayer d'ouvrir la sidebar côté client si l'écran est large.
+(function(){
+    try{
+        const breakpoint = 992;
+        if(window.innerWidth >= breakpoint){
+            // Add class to body to mimic expanded sidebar
+            document.documentElement.classList.add('streamlit-sidebar-open');
+            document.body.classList.add('streamlit-expanded');
+            // Try clicking the toggle if present
+            const tryClick = () => {
+                const btn = document.querySelector('button[title="Open sidebar"], button[aria-label="Toggle sidebar"], button[data-testid="stSidebarToggle"]');
+                if(btn && btn.getAttribute('aria-expanded') !== 'true') btn.click();
+            };
+            tryClick();
+            // also try again after a short delay in case DOM not ready
+            setTimeout(tryClick, 500);
+        }
+    }catch(e){console.warn('sidebar script failed', e)}
+})();
+</script>
+""", height=40)
 
 # Charger les données depuis le fichier JSON
 @st.cache_data
@@ -346,19 +542,44 @@ def t(key, lang='fr'):
     return TRANSLATIONS[lang].get(key, key)
 
 # Sidebar
-st.sidebar.image("Logo RUC.png", use_container_width=True)
 st.sidebar.markdown("---")
 lang = st.sidebar.radio("Language / Langue", ['Français', 'English'])
 lang_code = 'fr' if lang == 'Français' else 'en'
 
 # En-tête principal avec style
-st.markdown(f"""
-    <div class="main-header">
-        <h1>{t('title', lang_code)}</h1>
-        <h3>{t('subtitle', lang_code)}</h3>
-        <p style="margin: 0.5rem 0 0 0; font-size: 1.1rem;">{t('region', lang_code)} | {t('period', lang_code)}: {data['project_info']['period']}</p>
+# Header: render as a gradient banner with embedded logo (base64) and flag-underline
+logo_src = ""
+logo_path = "Logo RUC.png"
+if os.path.exists(logo_path):
+        try:
+                with open(logo_path, 'rb') as f:
+                        logo_b64 = base64.b64encode(f.read()).decode()
+                        logo_src = f"data:image/png;base64,{logo_b64}"
+        except Exception:
+                logo_src = ""
+
+header_html = f"""
+<div class="main-header" style="display:flex; align-items:center; gap:12px; padding:12px 16px;">
+  {f'<img src="{logo_src}" class="header-logo" style="width:64px; height:64px"/>' if logo_src else ''}
+  <div>
+    <div style="font-weight:700; font-size:20px; margin-bottom:2px;">{t('title', lang_code)}</div>
+    <div style="font-size:15px; color:#e0e7ff; margin-bottom:2px;">{t('subtitle', lang_code)}</div>
+    <div style="font-size:12px; color:#dbeafe;">{t('region', lang_code)} | {t('period', lang_code)}: {data['project_info']['period']}</div>
+  </div>
+</div>
+<!-- flag underline -->
+<div style="display:flex; justify-content:center; margin-top:8px; margin-bottom:16px;">
+    <div style="width:240px; display:flex; align-items:center; gap:0;">
+        <div style="flex:1; height:12px; background:#2ecc71;"></div>
+        <div style="flex:1; height:12px; background:#e74c3c; display:flex; align-items:center; justify-content:center;">
+            <div style="font-size:10px; color:yellow; line-height:1;">★</div>
+        </div>
+        <div style="flex:1; height:12px; background:#f6e05e;"></div>
     </div>
-""", unsafe_allow_html=True)
+</div>
+"""
+
+st.markdown(header_html, unsafe_allow_html=True)
 
 # Section Contexte
 with st.expander(f"{t('mission_context', lang_code)}", expanded=True):
@@ -368,21 +589,46 @@ with st.expander(f"{t('mission_context', lang_code)}", expanded=True):
         st.markdown(t('context_text', lang_code))
     with col2:
         st.markdown(f"#### {t('team', lang_code)}")
+        # Créer la liste des membres
+        team_html = "<div class='team-container'>"
+        
         for member in data['team']:
-            st.markdown(f"• {member}")
+            team_html += f"<div class='team-member'>{member}</div>"
+        team_html += "</div>"
+        
+        st.markdown(team_html, unsafe_allow_html=True)
 
 # Vue d'ensemble
 st.markdown(f'<div class="section-header"><h2>{t("overview", lang_code)}</h2></div>', unsafe_allow_html=True)
 
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    st.metric(t('families_surveyed', lang_code), f"{data['survey_data']['total_families']}")
+    st.markdown(f"""<div class="info-box">
+<div class="info-box-title">{t('families_surveyed', lang_code)}</div>
+<div class="info-box-value">{data['survey_data']['total_families']}</div>
+<div class="info-box-subtitle">5 {t('localities_map', lang_code).lower()}</div>
+</div>""", unsafe_allow_html=True)
+
 with col2:
-    st.metric(t('children_registered', lang_code), f"{data['survey_data']['total_children']}")
+    st.markdown(f"""<div class="info-box">
+<div class="info-box-title">{t('children_registered', lang_code)}</div>
+<div class="info-box-value">{data['survey_data']['total_children']}</div>
+<div class="info-box-subtitle">{t('avg_household', lang_code)}: {data['survey_data']['average_household_size']}</div>
+</div>""", unsafe_allow_html=True)
+
 with col3:
-    st.metric(t('boys', lang_code), f"{data['survey_data']['boys']}")
+    st.markdown(f"""<div class="info-box">
+<div class="info-box-title">{t('boys', lang_code)}</div>
+<div class="info-box-value">{data['survey_data']['boys']}</div>
+<div class="info-box-subtitle">{round(data['survey_data']['boys']/data['survey_data']['total_children']*100, 1)}%</div>
+</div>""", unsafe_allow_html=True)
+
 with col4:
-    st.metric(t('girls', lang_code), f"{data['survey_data']['girls']}")
+    st.markdown(f"""<div class="info-box">
+<div class="info-box-title">{t('girls', lang_code)}</div>
+<div class="info-box-value">{data['survey_data']['girls']}</div>
+<div class="info-box-subtitle">{round(data['survey_data']['girls']/data['survey_data']['total_children']*100, 1)}%</div>
+</div>""", unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -571,45 +817,59 @@ df_localities = pd.DataFrame([
     for loc in data['localities']
 ])
 
-col1, col2 = st.columns(2)
+# Graphique combiné avec deux axes
+fig_combined = make_subplots(
+    rows=1, cols=1,
+    specs=[[{"secondary_y": True}]]
+)
 
-with col1:
-    fig_families = px.bar(
-        df_localities,
-        x=t('locality', lang_code),
-        y=t('families', lang_code),
-        title=t('families', lang_code),
-        color=t('families', lang_code),
-        color_continuous_scale='Blues',
-        text=t('families', lang_code)
-    )
-    fig_families.update_traces(texttemplate='%{text}', textposition='outside')
-    fig_families.update_layout(
-        showlegend=False,
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        title_font=dict(size=20, color='#1e3a8a')
-    )
-    st.plotly_chart(fig_families, use_container_width=True)
+fig_combined.add_trace(
+    go.Bar(
+        x=df_localities[t('locality', lang_code)],
+        y=df_localities[t('families', lang_code)],
+        name=t('families', lang_code),
+        marker_color='#3b82f6',
+        text=df_localities[t('families', lang_code)],
+        textposition='outside',
+    ),
+    secondary_y=False,
+)
 
-with col2:
-    fig_children = px.bar(
-        df_localities,
-        x=t('locality', lang_code),
-        y=t('children', lang_code),
-        title=t('children', lang_code),
-        color=t('children', lang_code),
-        color_continuous_scale='Greens',
-        text=t('children', lang_code)
+fig_combined.add_trace(
+    go.Scatter(
+        x=df_localities[t('locality', lang_code)],
+        y=df_localities[t('children', lang_code)],
+        name=t('children', lang_code),
+        marker_color='#10b981',
+        mode='lines+markers+text',
+        text=df_localities[t('children', lang_code)],
+        textposition='top center',
+        line=dict(width=3),
+        marker=dict(size=12)
+    ),
+    secondary_y=True,
+)
+
+fig_combined.update_layout(
+    title={'text': f"{t('distribution_title', lang_code)}", 'font': {'size': 24, 'color': '#1e3a8a'}},
+    height=500,
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    hovermode='x unified',
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
     )
-    fig_children.update_traces(texttemplate='%{text}', textposition='outside')
-    fig_children.update_layout(
-        showlegend=False,
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        title_font=dict(size=20, color='#1e3a8a')
-    )
-    st.plotly_chart(fig_children, use_container_width=True)
+)
+
+fig_combined.update_xaxes(title_text=t('locality', lang_code))
+fig_combined.update_yaxes(title_text=t('families', lang_code), secondary_y=False)
+fig_combined.update_yaxes(title_text=t('children', lang_code), secondary_y=True)
+
+st.plotly_chart(fig_combined, use_container_width=True)
 
 # Graphique camembert
 col1, col2 = st.columns(2)
@@ -733,10 +993,13 @@ st.markdown(f"""
 
 # Footer
 slogan_key = 'slogan_fr' if lang_code == 'fr' else 'slogan_en'
+today = datetime.now().strftime("%d/%m/%Y") if lang_code == 'fr' else datetime.now().strftime("%Y-%m-%d")
+
 st.markdown(f"""
     <div class="footer">
         <h3>Raise-Up Cameroon (RUC)</h3>
         <p style="font-size: 1.1rem; font-style: italic;">"{data['project_info'][slogan_key]}"</p>
         <p style="margin-top: 1rem; opacity: 0.9;">Fondée en {data['project_info']['founding_year']} | {data['ruc_info']['active_members_cameroon']} membres actifs</p>
+        <p style="margin-top: 0.5rem; opacity: 0.9;">{"Date : " if lang_code == 'fr' else "Date: "}{today}</p>
     </div>
 """, unsafe_allow_html=True)
