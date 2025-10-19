@@ -498,6 +498,9 @@ def load_data():
 
 data = load_data()
 
+# Palette de couleurs utilisée pour les séries
+COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#6366f1', '#06b6d4']
+
 # Traductions
 TRANSLATIONS = {
     'fr': {
@@ -734,7 +737,7 @@ fig_map = px.scatter_mapbox(
         'lon': False
     },
     color='children',
-    color_continuous_scale='Blues',
+    color_continuous_scale='Viridis',
     zoom=6,
     height=500
 )
@@ -849,13 +852,13 @@ conditions_data = {
     t('far_from_health', lang_code): data['key_statistics']['living_conditions']['families_far_from_health_center_percent']
 }
 
+colors_for_conditions = [COLORS[3], COLORS[2], COLORS[4], COLORS[1]]
 fig_conditions = go.Figure(go.Bar(
     x=list(conditions_data.values()),
     y=list(conditions_data.keys()),
     orientation='h',
     marker=dict(
-        color=list(conditions_data.values()),
-        colorscale='Reds',
+        color=colors_for_conditions,
         showscale=False,
         line=dict(color='#1e3a8a', width=1)
     ),
@@ -901,9 +904,11 @@ fig_combined.add_trace(
         x=df_localities[t('locality', lang_code)],
         y=df_localities[t('families', lang_code)],
         name=t('families', lang_code),
-        marker_color='#3b82f6',
+        # assign a color per locality by cycling through the palette
+        marker_color=[COLORS[i % len(COLORS)] for i in range(len(df_localities))],
         text=df_localities[t('families', lang_code)],
         textposition='outside',
+        textfont=dict(color='white', size=12),
     ),
     secondary_y=False,
 )
@@ -913,12 +918,13 @@ fig_combined.add_trace(
         x=df_localities[t('locality', lang_code)],
         y=df_localities[t('children', lang_code)],
         name=t('children', lang_code),
-        marker_color='#10b981',
+        # keep the line a single color but color markers per locality to match the bars
         mode='lines+markers+text',
         text=df_localities[t('children', lang_code)],
         textposition='top center',
-        line=dict(width=3),
-        marker=dict(size=12)
+        textfont=dict(color='white', size=12),
+        line=dict(width=3, color=COLORS[1]),
+        marker=dict(size=12, color=[COLORS[i % len(COLORS)] for i in range(len(df_localities))])
     ),
     secondary_y=True,
 )
@@ -952,7 +958,8 @@ with col1:
         df_localities,
         values=t('families', lang_code),
         names=t('locality', lang_code),
-        title=f"{t('distribution_title', lang_code)} - {t('families', lang_code)}"
+        title=f"{t('distribution_title', lang_code)} - {t('families', lang_code)}",
+        color_discrete_sequence=COLORS
     )
     st.plotly_chart(fig_pie_families, use_container_width=True)
 
@@ -961,7 +968,8 @@ with col2:
         df_localities,
         values=t('children', lang_code),
         names=t('locality', lang_code),
-        title=f"{t('distribution_title', lang_code)} - {t('children', lang_code)}"
+        title=f"{t('distribution_title', lang_code)} - {t('children', lang_code)}",
+        color_discrete_sequence=COLORS
     )
     st.plotly_chart(fig_pie_children, use_container_width=True)
 
@@ -1069,10 +1077,10 @@ slogan_key = 'slogan_fr' if lang_code == 'fr' else 'slogan_en'
 today = datetime.now().strftime("%d/%m/%Y") if lang_code == 'fr' else datetime.now().strftime("%Y-%m-%d")
 
 st.markdown(f"""
-    <div class="footer">
-        <h3>Raise-Up Cameroon (RUC)</h3>
-        <p style="font-size: 1.1rem; font-style: italic;">"{data['project_info'][slogan_key]}"</p>
-        <p style="margin-top: 1rem; opacity: 0.9;">Fondée en {data['project_info']['founding_year']} | {data['ruc_info']['active_members_cameroon']} membres actifs</p>
-        <p style="margin-top: 0.5rem; opacity: 0.9;">{"Date : " if lang_code == 'fr' else "Date: "}{today}</p>
+    <div class="footer" style="color: #ffffff !important;">
+        <h3 style="color: #ffffff !important; margin-bottom: 0.5rem;">Raise-Up Cameroon (RUC)</h3>
+        <p style="font-size: 1.1rem; font-style: italic; color: #ffffff !important;">"{data['project_info'][slogan_key]}"</p>
+        <p style="margin-top: 1rem; color: rgba(255,255,255,0.95) !important;">Fondée en {data['project_info']['founding_year']} | {data['ruc_info']['active_members_cameroon']} membres actifs</p>
+        <p style="margin-top: 0.5rem; color: rgba(255,255,255,0.95) !important;">{"Date : " if lang_code == 'fr' else "Date: "}{today}</p>
     </div>
 """, unsafe_allow_html=True)
