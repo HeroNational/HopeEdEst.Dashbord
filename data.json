@@ -1,0 +1,372 @@
+{
+  "project_info": {
+    "title": "1 Cameroun, 10 Régions : Hope-édition Soleil Levant",
+    "region": "Région de l'Est, Cameroun",
+    "period": "26 août - 8 septembre 2025",
+    "organization": "Raise-Up Cameroon (RUC)",
+    "founder": "Manuella Kengne",
+    "founding_year": 2023,
+    "slogan_fr": "Apporte ton fruit au développement de ton pays",
+    "slogan_en": "Bring your fruit to the development of your country"
+  },
+  "team": [
+    "BATOUM Chantal",
+    "ENDOM Bronzi",
+    "KENGNE Manuella",
+    "NGUIARO Belva",
+    "MBELESSA Marie Ange"
+  ],
+  "ruc_info": {
+    "active_members_cameroon": 69,
+    "international_countries": 9,
+    "countries_list": [
+      "Russie",
+      "États-Unis",
+      "Canada",
+      "France",
+      "Allemagne",
+      "Belgique",
+      "Italie",
+      "Sénégal",
+      "Burkina Faso"
+    ],
+    "regions_cameroon": [
+      "Yaoundé",
+      "Douala",
+      "Ouest",
+      "Est",
+      "Adamaoua",
+      "Extrême Nord",
+      "Nord",
+      "Sud"
+    ]
+  },
+  "seedesa_pillars": [
+    {
+      "name_fr": "Social",
+      "name_en": "Social",
+      "icon": "🫂"
+    },
+    {
+      "name_fr": "Économique",
+      "name_en": "Economic",
+      "icon": "📊"
+    },
+    {
+      "name_fr": "Éducation",
+      "name_en": "Education",
+      "icon": "📚"
+    },
+    {
+      "name_fr": "Digital, NTIC & IA",
+      "name_en": "Digital, ICT & AI",
+      "icon": "💻"
+    },
+    {
+      "name_fr": "Environnemental",
+      "name_en": "Environmental",
+      "icon": "🌴"
+    },
+    {
+      "name_fr": "Santé",
+      "name_en": "Health",
+      "icon": "🩺"
+    },
+    {
+      "name_fr": "Art et Culture",
+      "name_en": "Art and Culture",
+      "icon": "🖼️"
+    }
+  ],
+  "survey_data": {
+    "total_families": 199,
+    "total_children": 1093,
+    "boys": 419,
+    "girls": 674,
+    "average_household_size": 9.5,
+    "max_household_size": 30
+  },
+  "localities": [
+    {
+      "name": "Bertoua",
+      "latitude": 4.5833,
+      "longitude": 13.6833,
+      "families": 45,
+      "children": 247,
+      "quarters_visited": [
+        "Koume",
+        "Bonis",
+        "Mokolo 2",
+        "Nkolbikon",
+        "Yademe",
+        "Quartier Haoussa",
+        "Dabadji",
+        "Kpokolota",
+        "Tigaza",
+        "Mandjou (Bindia)"
+      ],
+      "date": "26-28 août 2025",
+      "key_findings_fr": "85% des familles contraintes de sacrifier la scolarisation d'au moins un enfant. Pattern de déscolarisation pour travailler.",
+      "key_findings_en": "85% of families forced to sacrifice schooling for at least one child. Pattern of school dropout to work."
+    },
+    {
+      "name": "Batouri",
+      "latitude": 4.4333,
+      "longitude": 14.3667,
+      "families": 38,
+      "children": 209,
+      "quarters_visited": [
+        "Kambélé (sites miniers)",
+        "Mbondossi",
+        "Tripoli"
+      ],
+      "date": "29-30 août 2025",
+      "key_findings_fr": "45% des travailleurs dans les mines ont moins de 18 ans. Programme 'Zéro enfant dans les mines le temps de classe'.",
+      "key_findings_en": "45% of mine workers are under 18. 'Zero children in mines during school time' program."
+    },
+    {
+      "name": "Garoua-Boulaï",
+      "latitude": 5.8167,
+      "longitude": 14.5333,
+      "families": 47,
+      "children": 261,
+      "quarters_visited": [
+        "Bonga 1",
+        "Bonga 2",
+        "Ila",
+        "Gbabio",
+        "Badan"
+      ],
+      "date": "31 août - 1 septembre 2025",
+      "key_findings_fr": "51% des enfants sans acte de naissance. 61 jeunes de plus de 15 ans encore en primaire. 100% sans électricité, 95% sans eau potable.",
+      "key_findings_en": "51% of children without birth certificate. 61 youth over 15 still in primary school. 100% without electricity, 95% without drinking water.",
+      "children_without_birth_certificate": 131
+    },
+    {
+      "name": "Bétaré-Oya",
+      "latitude": 5.6,
+      "longitude": 14.0833,
+      "families": 42,
+      "children": 231,
+      "quarters_visited": [
+        "Sites miniers de Chaloupe",
+        "Quartiers vulnérables"
+      ],
+      "date": "2-3 septembre 2025",
+      "key_findings_fr": "60% des effectifs scolaires disparaissent pendant la saison sèche pour les mines. Revenus 3000-20000 FCFA/jour mais volatiles.",
+      "key_findings_en": "60% of school enrollment disappears during dry season for mines. Income 3000-20000 FCFA/day but volatile."
+    },
+    {
+      "name": "Atok",
+      "latitude": 4.2167,
+      "longitude": 13.2167,
+      "families": 27,
+      "children": 145,
+      "quarters_visited": [
+        "Souombou (village Baka)"
+      ],
+      "date": "3-4 septembre 2025",
+      "key_findings_fr": "95% de scolarisation chez les Baka 6-12 ans. 36km de piste forestière pour accéder. 20% sans acte. 100% sans eau ni électricité.",
+      "key_findings_en": "95% enrollment among Baka children 6-12 years. 36km forest track to access. 20% without birth certificate. 100% without water or electricity.",
+      "baka_enrollment_rate": 95,
+      "distance_to_village_km": 36
+    }
+  ],
+  "key_statistics": {
+    "education": {
+      "global_enrollment_rate": 68,
+      "primary_abandonment_rate": 45,
+      "abandonment_mining_zones": 65,
+      "children_without_birth_certificate_percent": 24,
+      "children_without_birth_certificate_total": 261,
+      "priority_regularization": 192,
+      "youth_over_15_in_primary": 61
+    },
+    "mining": {
+      "workers_under_18_percent": 45,
+      "daily_income_min_fcfa": 3000,
+      "daily_income_max_fcfa": 20000,
+      "seasonal_disappearance_rate": 60
+    },
+    "living_conditions": {
+      "families_without_electricity_percent": 95,
+      "families_without_water_percent": 92,
+      "families_without_latrines_percent": 88,
+      "families_far_from_health_center_percent": 78,
+      "health_center_distance_km": 10
+    },
+    "income": {
+      "families_below_25000_fcfa_percent": 89.28,
+      "income_from_informal_sector_percent": 94,
+      "monthly_income_threshold_fcfa": 25000
+    },
+    "critical_findings": {
+      "families_sacrificing_education_percent": 85,
+      "children_working_instead_of_school_percent": 85
+    }
+  },
+  "recommendations": {
+    "immediate_actions": [
+      {
+        "action_fr": "Distribution de kits scolaires à 1093 enfants",
+        "action_en": "Distribution of school kits to 1093 children",
+        "target": 1093,
+        "timeline": "Septembre-Décembre 2025"
+      },
+      {
+        "action_fr": "Régularisation de 261 actes de naissance (priorité : 192 enfants en fin de cycle primaire)",
+        "action_en": "Regularization of 261 birth certificates (priority: 192 children at end of primary cycle)",
+        "target": 261,
+        "priority_target": 192,
+        "timeline": "Septembre-Décembre 2025",
+        "partner": "BUNEC"
+      },
+      {
+        "action_fr": "Distribution de kits d'hygiène à 673 filles",
+        "action_en": "Distribution of hygiene kits to 673 girls",
+        "target": 673,
+        "timeline": "Septembre-Décembre 2025"
+      },
+      {
+        "action_fr": "Distribution de trousses de premier secours aux familles",
+        "action_en": "Distribution of first aid kits to families",
+        "timeline": "Septembre-Décembre 2025"
+      },
+      {
+        "action_fr": "Partenariat avec SONAMINE pour étendre le programme 'Zéro enfant dans les mines'",
+        "action_en": "Partnership with SONAMINE to expand 'Zero children in mines' program",
+        "timeline": "Septembre-Décembre 2025",
+        "partner": "SONAMINE"
+      }
+    ],
+    "long_term": [
+      {
+        "action_fr": "Développement des infrastructures scolaires dans les zones enclavées",
+        "action_en": "Development of school infrastructure in remote areas"
+      },
+      {
+        "action_fr": "Programme de sensibilisation sur l'importance de l'éducation",
+        "action_en": "Awareness program on the importance of education"
+      },
+      {
+        "action_fr": "Création de centres de santé dans les villages périphériques (>15km actuellement)",
+        "action_en": "Creation of health centers in peripheral villages (>15km currently)"
+      },
+      {
+        "action_fr": "Développement d'alternatives économiques viables pour réduire le travail des enfants",
+        "action_en": "Development of viable economic alternatives to reduce child labor"
+      },
+      {
+        "action_fr": "Électrification et accès à l'eau potable dans les villages isolés",
+        "action_en": "Electrification and access to drinking water in isolated villages"
+      }
+    ]
+  },
+  "executive_summary": {
+    "fr": "L'enquête menée par Raise-Up Cameroon (RUC) dans la région de l'Est révèle une situation éducative alarmante où 85% des familles enregistrées sont contraintes de sacrifier la scolarisation d'au moins un enfant. Les principaux constats montrent que 45% des enfants abandonnent l'école avant la fin du primaire, tandis que 24% n'ont pas d'acte de naissance, ce qui bloque leur parcours scolaire au CM2. Les mines artisanales capturent une main-d'œuvre juvénile significative, avec 45% des travailleurs âgés de moins de 18 ans, attirés par des revenus immédiats comme 3 000 FCFA par jour. Les conditions de vie extrêmes aggravent la situation : 95% des familles sans électricité, 92% sans accès à l'eau potable et 78% vivant à plus de 10 km d'un centre de santé. Malgré ce tableau sombre, l'enquête a identifié des îlots d'espoir, comme le taux de scolarisation de 95% chez les enfants Baka de 6 à 12 ans, et des cas exemplaires comme celui de Sakinatou, jeune polyglotte de Bindia.",
+    "en": "The survey conducted by Raise-Up Cameroon (RUC) in the East Region reveals an alarming educational situation where 85% of registered families are forced to sacrifice the schooling of at least one child. Key findings show that 45% of children drop out of school before completing primary education, while 24% lack birth certificates, blocking their educational progression at the CM2 level. Artisanal mines capture significant juvenile labor, with 45% of workers aged under 18, attracted by immediate daily earnings of 3,000 FCFA. Extreme living conditions exacerbate the situation: 95% of families without electricity, 92% without access to drinking water, and 78% living more than 10 km from a health center. Despite this bleak picture, the survey identified beacons of hope, such as the 95% enrollment rate among Baka children aged 6-12, and exemplary cases like that of Sakinatou, a young polyglot from Bindia."
+  },
+  "notable_cases": [
+    {
+      "name": "Fadimatou",
+      "age": 17,
+      "location": "Quartier Haoussa, Bertoua",
+      "story_fr": "Rêve de devenir médecin mais fait face à la précarité. Représente les enfants du quartier contraints de renoncer à leurs rêves pour des ambitions plus réalistes (couturière, coiffeuse).",
+      "story_en": "Dreams of becoming a doctor but faces precarity. Represents children in the neighborhood forced to give up their dreams for more realistic ambitions (seamstress, hairdresser)."
+    },
+    {
+      "name": "Sakinatou",
+      "location": "École primaire publique inclusive de Bindia",
+      "story_fr": "Jeune polyglotte maîtrisant l'anglais, le fulfulde, l'arabe et le français. A des responsabilités prestigieuses dans son établissement. Exemple du potentiel immense malgré les difficultés.",
+      "story_en": "Young polyglot mastering English, Fulfulde, Arabic and French. Has prestigious responsibilities in her school. Example of immense potential despite difficulties."
+    },
+    {
+      "name": "Elisabeth",
+      "age": 20,
+      "location": "Garoua-Boulaï",
+      "story_fr": "Toujours scolarisée en primaire, envisage d'abandonner ses études pour une formation en couture, considérant que l'école 'ne semble mener nulle part'.",
+      "story_en": "Still in primary school, considering dropping out for sewing training, believing that school 'seems to lead nowhere'."
+    },
+    {
+      "name": "André",
+      "age": 16,
+      "location": "Sites miniers, Bétaré-Oya",
+      "story_fr": "Travaille dans les mines depuis son enfance. Gagne entre 5000 et 15000 FCFA par jour. Déclare : 'À l'école, on me promettait un avenir, mais ici je vois l'argent tout de suite'.",
+      "story_en": "Works in mines since childhood. Earns between 5000 and 15000 FCFA per day. States: 'At school, they promised me a future, but here I see money right away'."
+    }
+  ],
+  "partners_mentioned": [
+    {
+      "name": "SONAMINE",
+      "program": "Zéro enfant dans les mines le temps de classe",
+      "role": "Partenariat pour suivi des enfants travailleurs miniers"
+    },
+    {
+      "name": "BUNEC",
+      "role": "Régularisation des actes de naissance"
+    },
+    {
+      "name": "PAM (Programme Alimentaire Mondial)",
+      "role": "Subventions alimentaires scolaires"
+    },
+    {
+      "name": "UNICEF",
+      "role": "Organisation de meetings sur la protection de l'enfance"
+    }
+  ],
+  "mayors_met": [
+    {
+      "name": "DIMBÉLÉ Sodea Jean Marie",
+      "title": "Super Maire",
+      "locality": "Bertoua"
+    },
+    {
+      "name": "MBELESSA Auberlin",
+      "title": "Maire",
+      "locality": "Batouri"
+    },
+    {
+      "name": "ADAMOU Abdon",
+      "title": "Maire",
+      "locality": "Garoua-Boulaï"
+    },
+    {
+      "name": "BABA Nicolas",
+      "title": "Maire",
+      "locality": "Bétaré-Oya"
+    },
+    {
+      "name": "ABE Antoinette",
+      "title": "Adjointe au Maire",
+      "locality": "Bétaré-Oya"
+    },
+    {
+      "name": "BAK Jean Yves",
+      "title": "Maire",
+      "locality": "Atok"
+    }
+  ],
+  "methodology": {
+    "approach": "Méthodologie mixte quantitative et qualitative",
+    "duration_days": 11,
+    "daily_work_hours": 12,
+    "coverage_households_percent": 90,
+    "data_collection": [
+      "Fiches d'enquête personnalisées",
+      "Entretiens individualisés avec les parents",
+      "Observation directe du cadre de vie",
+      "Échanges informels avec les enfants"
+    ],
+    "ethical_principles": [
+      "Consentement éclairé des participants",
+      "Restitution systématique de la démarche",
+      "Respect de la confidentialité"
+    ]
+  },
+  "previous_edition": {
+    "name": "HOPE - Édition 1",
+    "regions": ["Adamaoua", "Nord", "Extrême-Nord"],
+    "children_helped": 539,
+    "year": 2024
+  }
+}
