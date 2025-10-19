@@ -18,10 +18,25 @@ st.set_page_config(
 
 # Fonction pour injecter le CSS de manière cachée
 def local_css():
-    st.markdown("""
-    <style>
-    /* Importer la police Montserrat depuis Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
+    st.markdown("""<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+    /* Police par défaut pour tout */
+    * {
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Restauration de la police d'origine pour les icônes uniquement */
+    .material-icons-outlined,
+    .material-icons.material-icons-outlined,
+    .material-icons,
+    .streamlit-expanderHeader span[class^="st-emotion-"],
+    span[class^="st-emotion-"][class*="Arrow"],
+    i[class^="st-emotion-"],
+    button[kind="secondary"] span {
+        font-family: 'Material Icons' !important;
+    }
 
     /* Police par défaut et couleur texte légèrement atténuée */
     :root {
@@ -221,6 +236,8 @@ def local_css():
     }
 
     /* Footer */
+    .footer p {
+                color: #ffffff !important;}
     .footer {
         background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
         padding: 2rem;
@@ -442,7 +459,7 @@ def local_css():
         background: #d1fae5;
         color: #065f46;
     }
-    </style>
+</style>
     """, unsafe_allow_html=True)
 
 # Appliquer le CSS
@@ -745,6 +762,7 @@ fig_map = px.scatter_mapbox(
 fig_map.update_layout(
     mapbox_style="open-street-map",
     margin={"r": 0, "t": 0, "l": 0, "b": 0},
+    font=dict(family="Montserrat, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial"),
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)'
 )
@@ -797,6 +815,7 @@ with col1:
     ))
     fig_abandon.update_layout(height=300, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
     st.plotly_chart(fig_abandon, use_container_width=True)
+
 
 with col2:
     # Graphique familles sacrifiant l'éducation
@@ -874,6 +893,7 @@ fig_conditions.update_layout(
     showlegend=False,
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)',
+    font=dict(family="Montserrat, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial"),
     xaxis=dict(gridcolor='#e2e8f0'),
     yaxis=dict(gridcolor='#e2e8f0')
 )
@@ -934,6 +954,7 @@ fig_combined.update_layout(
     height=500,
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)',
+    font=dict(family="Montserrat, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial"),
     hovermode='x unified',
     legend=dict(
         orientation="h",
@@ -961,6 +982,7 @@ with col1:
         title=f"{t('distribution_title', lang_code)} - {t('families', lang_code)}",
         color_discrete_sequence=COLORS
     )
+    fig_pie_families.update_layout(font=dict(family="Montserrat, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial"))
     st.plotly_chart(fig_pie_families, use_container_width=True)
 
 with col2:
@@ -971,6 +993,7 @@ with col2:
         title=f"{t('distribution_title', lang_code)} - {t('children', lang_code)}",
         color_discrete_sequence=COLORS
     )
+    fig_pie_children.update_layout(font=dict(family="Montserrat, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial"))
     st.plotly_chart(fig_pie_children, use_container_width=True)
 
 st.markdown("---")
@@ -1000,6 +1023,7 @@ fig_income = px.pie(
     title=t('income_analysis', lang_code),
     color_discrete_sequence=['#ff4444', '#44ff44']
 )
+fig_income.update_layout(font=dict(family="Montserrat, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial"))
 st.plotly_chart(fig_income, use_container_width=True)
 
 st.markdown("---")
@@ -1074,13 +1098,11 @@ st.markdown(f"""
 
 # Footer
 slogan_key = 'slogan_fr' if lang_code == 'fr' else 'slogan_en'
-today = datetime.now().strftime("%d/%m/%Y") if lang_code == 'fr' else datetime.now().strftime("%Y-%m-%d")
 
 st.markdown(f"""
     <div class="footer" style="color: #ffffff !important;">
         <h3 style="color: #ffffff !important; margin-bottom: 0.5rem;">Raise-Up Cameroon (RUC)</h3>
-        <p style="font-size: 1.1rem; font-style: italic; color: #ffffff !important;">"{data['project_info'][slogan_key]}"</p>
-        <p style="margin-top: 1rem; color: rgba(255,255,255,0.95) !important;">Fondée en {data['project_info']['founding_year']} | {data['ruc_info']['active_members_cameroon']} membres actifs</p>
-        <p style="margin-top: 0.5rem; color: rgba(255,255,255,0.95) !important;">{"Date : " if lang_code == 'fr' else "Date: "}{today}</p>
+        <p style="font-size: 1.1rem; font-style: italic; color: white !important;">"{data['project_info'][slogan_key]}"</p>
+        <p style="margin-top: 1rem;  color: white !important; !important;">Fondée en {data['project_info']['founding_year']} | {data['ruc_info']['active_members_cameroon']} membres actifs (19/10/2025)</p>
     </div>
 """, unsafe_allow_html=True)
