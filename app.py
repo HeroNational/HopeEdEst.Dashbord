@@ -20,6 +20,14 @@ st.set_page_config(
 def local_css():
     st.markdown("""
     <style>
+    /* Importer la police Montserrat depuis Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
+
+    /* Police par défaut et couleur texte légèrement atténuée */
+    :root {
+        --main-text: #0b1220; /* très sombre mais pas noir pur */
+        --muted-text: #475569;
+    }
     /* Masquer le CSS affiché */
     .main {
         background-color: #f8f9fa;
@@ -36,6 +44,7 @@ def local_css():
         display: flex;
         align-items: center;
         gap: 1rem;
+        font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
 
     .main-header h1 {
@@ -43,6 +52,7 @@ def local_css():
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
+        font-family: 'Montserrat', sans-serif;
     }
 
     .main-header h3 {
@@ -58,6 +68,64 @@ def local_css():
         background: rgba(255,255,255,0.08);
         padding: 6px;
         box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    /* Appliquer la police Montserrat et couleur de texte par défaut pour tout le contenu */
+    :root {
+        --main-text: #0b1220; /* très sombre mais pas noir pur */
+        --muted-text: #475569;
+        --fs-h1: 28px;
+        --fs-h2: 20px;
+        --fs-h3: 16px;
+        --fs-base: 14px;
+        --fw-regular: 400;
+        --fw-medium: 600;
+        --fw-bold: 700;
+        --line-height: 1.45;
+    }
+
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+    /* Forcer Montserrat globalement pour écraser les fonts par défaut (Source Sans...) */
+    html, body, .stApp, .main, .block-container, .streamlit-expanderContent, div[data-testid="stAppViewContainer"], section[data-testid="stSidebar"] {
+        font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial !important;
+        color: var(--main-text) !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        line-height: var(--line-height);
+        font-size: var(--fs-base);
+    }
+
+    /* Assurer que les éléments typographiques inline et widgets héritent bien */
+    .stButton button, button, label, input, textarea, select {
+        font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial !important;
+    }
+
+    /* Titres et hiérarchie */
+    .main-header h1 { font-size: var(--fs-h1); font-weight: var(--fw-bold); line-height:1.05; }
+    .main-header h3 { font-size: var(--fs-h3); font-weight: var(--fw-medium); }
+    .section-header h2 { font-size: var(--fs-h2); font-weight: var(--fw-medium); }
+
+    /* Texte courant */
+    p, span, li, .case-card p { font-size: var(--fs-base); color: var(--main-text); }
+
+    /* Métriques et info boxes */
+    .info-box-title { font-size: 12px; letter-spacing: 0.6px; font-weight: var(--fw-medium); color: var(--muted-text); }
+    .info-box-value { font-size: 28px; font-weight: var(--fw-bold); color: #1e3a8a; }
+
+    /* Sidebar: labels et radios */
+    section[data-testid="stSidebar"] .stRadio > label { font-family: 'Montserrat', sans-serif; font-weight: var(--fw-medium); }
+
+    div[data-testid="stMetricLabel"] {
+        color: #64748b;
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    /* Adapter les textes secondaires */
+    .team-name, .info-box-subtitle, .case-card p, .recommendation-box, .recommendation-box-urgent, .team-member {
+        color: var(--muted-text);
+        font-size: var(--fs-base);
     }
 
     /* Cartes de statistiques */
@@ -102,6 +170,11 @@ def local_css():
     div[data-testid="stMetricLabel"] {
         color: #64748b;
         font-weight: 500;
+    }
+
+    /* Adapter les textes secondaires */
+    .team-name, .info-box-subtitle, .case-card p, .recommendation-box, .recommendation-box-urgent, .team-member {
+        color: var(--muted-text);
     }
 
     /* Cartes d'expansion */
