@@ -676,14 +676,12 @@ for idx, case in enumerate(data['notable_cases']):
         if 'age' in case:
             age_html = f"<p><strong>{t('age', lang_code)}:</strong> {case['age']} ans</p>"
 
-        case_html = f"""
-        <div class="case-card">
-            <h3>{case['name']}</h3>
-            {age_html}
-            <p><strong>{t('locality', lang_code)}:</strong> {case['location']}</p>
-            <p>{case[story_key]}</p>
-        </div>
-        """
+        case_html = f"""<div class="case-card">
+<h3>{case['name']}</h3>
+{age_html}
+<p><strong>{t('locality', lang_code)}:</strong> {case['location']}</p>
+<p>{case[story_key]}</p>
+</div>"""
         st.markdown(case_html, unsafe_allow_html=True)
 
 # Recommandations
